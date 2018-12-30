@@ -6,19 +6,11 @@ import com.example.baseball.domain.Player
 
 @Service
 class PlayerService(private val playerRepository: PlayerRepository) {
-    fun findAll(): List<Player> {
-        return playerRepository.findAll()
-    }
+    fun findAll() = playerRepository.findAll()
 
-    fun findOne(id: Long): Player {
-        return playerRepository.findById(id).orElse(null)
-    }
+    fun findOne(id: Long) = playerRepository.findById(id).orElse(null)
 
-    fun save(player: Player): Player {
-        return playerRepository.save(player)
-    }
+    fun save(player: Player) = playerRepository.save(player)
 
-    fun delete(id: Long) {
-        playerRepository.deleteById(id)
-    }
+    fun delete(id: Long) = playerRepository.deleteById(id)
 }
