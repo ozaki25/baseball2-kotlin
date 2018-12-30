@@ -4,7 +4,9 @@ import com.example.baseball.domain.Player
 import com.example.baseball.service.PlayerService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @Controller
 @RequestMapping("/players")
@@ -17,6 +19,7 @@ class PlayerController(private val playerService: PlayerService) {
 
     @GetMapping("new")
     fun newPlayer(model: Model): String {
+        model.addAttribute("player", Player())
         return "players/new"
     }
 
@@ -33,13 +36,15 @@ class PlayerController(private val playerService: PlayerService) {
     }
 
     @PostMapping
-    fun create(@ModelAttribute player: Player): String {
+    fun create(@Valid @ModelAttribute player: Player, bindingResult: BindingResult): String {
+        if (bindingResult.hasErrors()) return "players/new";
         playerService.save(player)
         return "redirect:/players"
     }
 
     @PutMapping("{id}")
-    fun update(@PathVariable id: Long, @ModelAttribute player: Player): String {
+    fun update(@Valid @PathVariable id: Long, @ModelAttribute player: Player, bindingResult: BindingResult): String {
+        if (bindingResult.hasErrors()) return "players/edit";
         playerService.save(player.copy(id = id))
         return "redirect:/players"
     }
