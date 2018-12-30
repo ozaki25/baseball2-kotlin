@@ -43,7 +43,7 @@ class PlayerController(private val playerService: PlayerService) {
     }
 
     @PutMapping("{id}")
-    fun update(@Valid @PathVariable id: Long, @ModelAttribute player: Player, bindingResult: BindingResult): String {
+    fun update(@PathVariable id: Long, @Valid @ModelAttribute player: Player, bindingResult: BindingResult): String {
         if (bindingResult.hasErrors()) return "players/edit";
         playerService.save(player.copy(id = id))
         return "redirect:/players"
